@@ -1,0 +1,10 @@
+h1,p,div{
+    margin:10px 0 0 10px;
+}
+
+#dropArea{
+    width:180px;
+    height:100%;
+    background-color:#999999;
+    padding:10px;
+}
