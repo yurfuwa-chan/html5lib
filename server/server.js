@@ -19,9 +19,10 @@ console.log("Server running at http://127.0.0.1:3000/");
 // socket.io
 var socket = io.listen(server);
 socket.on('connection', function(client){
-    client.send("hi");
-  client.on('message', function(){
-    alert(data);
+    client.send("wellcome new user");
+  client.on('message', function(data){
+    client.send(data);
+    client.broadcast(data);
   });
   client.on('disconnect', function(){
     client.send("goodbye");
