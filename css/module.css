@@ -1,3 +1,50 @@
-h1,p,div{
-    margin:10px 0 0 10px;
+body{
+    background-color:#DDD;
+}
+
+h1,div,section{
+    margin:10px;
+}
+
+div,p{
+    margin-left:0;
+}
+
+h1,p,li{
+    font-family:"Helvetica",sans-serif;
+    padding:10px 0 10px 0;
+}
+
+h1,form,.view{
+    text-align:center;
+}
+
+li{
+    list-style:none;
+}
+
+section{
+    width:600px;
+    margin-left:auto;
+    margin-right:auto;
+    padding:20px;
+    border:1px solid #FFF;
+    background-color:#FFF;
+    border-radius:10px;
+    -webkit-border-radius:10px;
+    -moz-border-radius:10px;
+}
+
+.alternate{
+    width:560px;
+    height:100%;
+    padding:10px;
+}
+
+.alternate p:nth-child(odd){
+    background-color:#999999;
+}
+
+.alternate p:nth-child(even){
+    background-color:#EEEEEE;
 }
