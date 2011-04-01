@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset=utf-8 />
+        <title>HTML 5 Canvas + WebWorkers</title>
+        <link href="css/html5reset.css" rel="stylesheet" type="text/css">
+        <link href="css/module.css" rel="stylesheet" type="text/css">
+        <script type="text/javascript" src="script/gasket.js" ></script>
+        <script type="text/javascript" >
+
+            var canvas,ctx,imageData;
+            function init(){
+                canvas = document.getElementById("canvas");
+                ctx = canvas.getContext("2d");
+                imageData = ctx.getImageData(0,0,canvas.width,canvas.height);
+                loaderVisible(false);
+                document.getElementById("normalButton").addEventListener("click",normal,false);
+                document.getElementById("workersButton").addEventListener("click",useWorker,false);
+            }
+
+            function useWorker(){
+                loaderVisible(true);
+                var worker= new Worker("script/workers.js");
+                worker.onmessage = function(e){
+                    imageData.data = e.data;
+                    ctx.putImageData(imageData,0,0);
+                    loaderVisible(false);
+                };
+                worker.postMessage(["start",imageData.data,canvas.width,canvas.height,200]);
+            }
+
+            function normal(){
+                loaderVisible(true);
+                var gasket = new Gasket(canvas.width,canvas.height,200);
+                var data = imageData.data;
+                for(var i=0;i<1000000;i++){
+                    var p = gasket.update();
+                    var index = ((canvas.width*Math.floor(p.y))+Math.floor(p.x))*4;
+                    data[index + 0] = 51; // Ô red
+                    data[index + 1] = 51; // —Î green
+                    data[index + 2] = 51; // Â blue
+                    data[index + 3] = 255; // “§–¾“x alpha
+                }
+                imageData.data = data;
+                ctx.putImageData(imageData,0,0);
+                loaderVisible(false);
+            }
+
+            function loaderVisible(visible){
+                loader = document.getElementById("loader");
+                loader.style.display = visible ? "block" : "none";
+            }
+
+            addEventListener("load",init,false);
+        </script>
+    </head>
+    <body>
+        <header>
+            <h1>HTML 5 Canvas + WebWorkers</h1>
+        </header>
+        <section class="view">
+            <div id="loader"><img src="image/ajax-loader.gif" width="16" height="16" /></div>
+            <canvas id="canvas" width="600" height="400"></canvas>
+            <input id="normalButton" type="button" value="normal" />
+            <input id="workersButton" type="button" value="workers" />
+        </section>
+    </body>
+</html>

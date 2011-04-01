@@ -19,6 +19,10 @@ h1,form,.view{
     text-align:center;
 }
 
+.view{
+    position:relative;
+}
+
 li{
     list-style:none;
 }
@@ -47,4 +51,10 @@ section{
 
 .alternate p:nth-child(even){
     background-color:#EEEEEE;
+}
+
+#loader{
+    position:absolute;
+    top:202px;
+    left:302px;
 }
